@@ -46,7 +46,15 @@ func (l *Login) runPostExternalAuthenticationActions(
 	if resourceOwner == "" {
 		resourceOwner = authz.GetInstance(ctx).DefaultOrganisationID()
 	}
-	triggerActions, err := l.query.GetActiveActionsByFlowAndTriggerType(ctx, domain.FlowTypeExternalAuthentication, domain.TriggerTypePostAuthentication, resourceOwner)
+	triggerActions, err := l.selectFlowActions(
+		resourceOwner,
+		domain.FlowTypeExternalAuthentication,
+		domain.TriggerTypePostAuthentication,
+		authRequest,
+		httpRequest,
+		"",
+		authenticationError,
+	)
 	if err != nil {
 		return nil, false, err
 	}
@@ -189,7 +197,15 @@ func (l *Login) runPostInternalAuthenticationActions(
 		resourceOwner = authRequest.UserOrgID
 	}
 
-	triggerActions, err := l.query.GetActiveActionsByFlowAndTriggerType(ctx, domain.FlowTypeInternalAuthentication, domain.TriggerTypePostAuthentication, resourceOwner)
+	triggerActions, err := l.selectFlowActions(
+		resourceOwner,
+		domain.FlowTypeInternalAuthentication,
+		domain.TriggerTypePostAuthentication,
+		authRequest,
+		httpRequest,
+		string(authMethod),
+		authenticationError,
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -248,7 +264,15 @@ func (l *Login) runPreCreationActions(
 ) (*domain.Human, []*domain.Metadata, error) {
 	ctx := httpRequest.Context()
 
-	triggerActions, err := l.query.GetActiveActionsByFlowAndTriggerType(ctx, flowType, domain.TriggerTypePreCreation, resourceOwner)
+	triggerActions, err := l.selectFlowActions(
+		resourceOwner,
+		flowType,
+		domain.TriggerTypePreCreation,
+		authRequest,
+		httpRequest,
+		"",
+		nil,
+	)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -368,7 +392,15 @@ func (l *Login) runPostCreationActions(
 ) ([]*domain.UserGrant, error) {
 	ctx := httpRequest.Context()
 
-	triggerActions, err := l.query.GetActiveActionsByFlowAndTriggerType(ctx, flowType, domain.TriggerTypePostCreation, resourceOwner)
+	triggerActions, err := l.selectFlowActions(
+		resourceOwner,
+		flowType,
+		domain.TriggerTypePostCreation,
+		authRequest,
+		httpRequest,
+		"",
+		nil,
+	)
 	if err != nil {
 		return nil, err
 	}

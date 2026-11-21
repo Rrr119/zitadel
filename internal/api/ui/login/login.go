@@ -24,6 +24,7 @@ import (
 	"github.com/zitadel/zitadel/internal/domain"
 	"github.com/zitadel/zitadel/internal/domain/federatedlogout"
 	"github.com/zitadel/zitadel/internal/form"
+	"github.com/zitadel/zitadel/internal/loginflow"
 	"github.com/zitadel/zitadel/internal/query"
 	"github.com/zitadel/zitadel/internal/static"
 	"github.com/zitadel/zitadel/internal/zerrors"
@@ -46,6 +47,7 @@ type Login struct {
 	userCodeAlg         crypto.EncryptionAlgorithm
 	caches              *Caches
 	httpClient          *http.Client
+	flowOrchestrator    *loginflow.Orchestrator
 }
 
 type Config struct {
@@ -214,6 +216,9 @@ func CreateLogin(
 		idpConfigAlg:        idpConfigAlg,
 		userCodeAlg:         userCodeAlg,
 		httpClient:          httpClient,
+		// The default orchestrator uses an empty registry, so every active
+		// flow action keeps running until a condition provider is registered.
+		flowOrchestrator: loginflow.NewOrchestrator(loginflow.NewRegistry()),
 	}
 	csrfInterceptor := createCSRFInterceptor(config.CSRFCookieName, csrfCookieKey, externalSecure, login.csrfErrorHandler())
 	cacheInterceptor := createCacheInterceptor(config.Cache.MaxAge, config.Cache.SharedMaxAge, assetCache)
