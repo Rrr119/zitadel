@@ -1,0 +1,17 @@
+{
+  "root": "/home/dev/feedback/uid36822",
+  "B": "/home/dev/feedback/uid36822",
+  "sha": "bbea433d6ead25476f4df6aa2965dec46681d30c",
+  "wslDistro": "Ubuntu-26.04",
+  "source": {
+    "owner": "zitadel",
+    "repo": "zitadel",
+    "sha": "bbea433d6ead25476f4df6aa2965dec46681d30c"
+  },
+  "fork": {
+    "owner": "Rrr119",
+    "repo": "zitadel",
+    "cloneUrl": "https://github.com/Rrr119/zitadel.git"
+  },
+  "at": "2026-11-25T02:42:59.094Z"
+}

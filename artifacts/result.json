@@ -1,0 +1,18 @@
+{
+  "uid": "36822",
+  "harness": "Codex CLI",
+  "snapshotUrl": "https://github.com/Rrr119/zitadel/commit/bbea433d6ead25476f4df6aa2965dec46681d30c",
+  "harnessVersion": "codex-cli 0.167.2",
+  "operatingSystem": "Ubuntu 26.04.1 LTS",
+  "operatingSystemCell": [
+    "MacOS/Linux"
+  ],
+  "outputDirectory": "/home/dev/feedback/uid36822",
+  "wslDistro": "Ubuntu-26.04",
+  "B": {
+    "success": false,
+    "canceled": true,
+    "error": "任务已取消",
+    "side": "B"
+  }
+}
